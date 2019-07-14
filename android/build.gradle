@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+android {
+    compileSdkVersion safeExtGet('compileSdkVersion', 26)
+    buildToolsVersion safeExtGet('buildToolsVersion', '26.0.2')
+
+
+    defaultConfig {
+        minSdkVersion safeExtGet('minSdkVersion', 16)
+        targetSdkVersion safeExtGet('targetSdkVersion', 26)
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
+    maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+    }
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        maven { url "https://jitpack.io" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+    }
+}
+
+dependencies {
+    implementation "com.facebook.react:react-native:+"
+    implementation "com.google.android.gms:play-services-gcm:${safeExtGet('googlePlayServicesVersion', '16.1.0')}"
+    implementation 'com.github.freshdesk:freshchat-android:2.5.2'
